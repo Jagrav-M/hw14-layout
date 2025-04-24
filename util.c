@@ -23,7 +23,7 @@ void add_child(struct DOMNode *parent, struct DOMNode *child) {
 struct DOMNode *alloc_node(int id, float padding, enum dir layout) {
   struct DOMNode *node = malloc(sizeof(struct DOMNode *));
   node->id = id;
-  node->padding = padding;
+  // node->padding = padding;
   node->children = NULL;
   node->layout = layout;
   return node;

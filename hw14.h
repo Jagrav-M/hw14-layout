@@ -13,7 +13,7 @@ struct DOMNodeList {
 
 struct DOMNode {
   int id;
-  float padding;
+  // float padding;
   enum dir layout;
   struct DOMNodeList *children;
 };

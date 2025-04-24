@@ -16,7 +16,7 @@ static void render_helper(struct DOMNode *root, float left, float top,
   size_t num_children = length(root->children);
   if (num_children == 0)
     return;
-  float padded_space = (num_children + 1) * root->padding;
+  float padded_space = 0; //(num_children + 1) * root->padding;
   if (root->layout == LAYOUT_HORIZ) {
     float increment = (width - padded_space) / num_children;
     left += padded_space;
