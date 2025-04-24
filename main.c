@@ -1,11 +1,11 @@
 #include "hw14.h"
 
 int main(void) {
-  struct DOMNode *root = alloc_node(0, LAYOUT_HORIZ);
-  struct DOMNode *node1 = alloc_node(1, LAYOUT_VERT);
-  struct DOMNode *node2 = alloc_node(2, LAYOUT_NONE);
-  struct DOMNode *node3 = alloc_node(3, LAYOUT_NONE);
-  struct DOMNode *node4 = alloc_node(4, LAYOUT_NONE);
+  struct DOMNode *root = alloc_node(0, 10.f, LAYOUT_HORIZ);
+  struct DOMNode *node1 = alloc_node(1, 5.f, LAYOUT_VERT);
+  struct DOMNode *node2 = alloc_node(2, 0.f, LAYOUT_NONE);
+  struct DOMNode *node3 = alloc_node(3, 0.f, LAYOUT_NONE);
+  struct DOMNode *node4 = alloc_node(4, 5.f, LAYOUT_NONE);
 
   add_child(root, node1);
   add_child(root, node4);
