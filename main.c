@@ -1,9 +1,11 @@
 #include "hw14.h"
 
+#include <ctype.h>
 #include <stdlib.h>
+#include <string.h>
 
-int main(void) {
-
+static void test_render() {
+  // (0 horiz 1 (1 vert 0.5 (2 none 0) (3 none 0)) (4 none 0))
   struct DOMNode *root = alloc_node(0, LAYOUT_HORIZ, 1.f);
   struct DOMNode *node1 = alloc_node(1, LAYOUT_VERT, 0.5f);
   struct DOMNode *node2 = alloc_node(2, LAYOUT_NONE, 0.f);
@@ -19,6 +21,21 @@ int main(void) {
   render(root, 100, 100);
 
   free_DOMTree(root);
+}
 
+static void test_parse_render() {
+  char tree[] = "(0 horiz 1 (1 vert 0.5 (2 none 0) (3 none 0)) (4 none 0))";
+  struct stream s = {
+    .text = tree, .pos = 0, .length = strlen(tree)
+  };
+
+  struct DOMNode *root = load_tree(&s);
+  render(root, 100, 100);
+}
+
+int main(void) {
+  test_render();
+  printf("---\n");
+  test_parse_render();
   return 0;
 }
