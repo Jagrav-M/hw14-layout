@@ -17,14 +17,15 @@ static void insert_tail(struct DOMNodeList **list_ptr,
 void add_child(struct DOMNode *parent, struct DOMNode *child) {
   struct DOMNodeList *new_node = malloc(sizeof(struct DOMNodeList));
   new_node->node = child;
+  new_node->next = NULL;
   insert_tail(&parent->children, new_node);
 }
 
-struct DOMNode *alloc_node(int id, float padding, enum dir layout) {
-  struct DOMNode *node = malloc(sizeof(struct DOMNode *));
+struct DOMNode *alloc_node(int id, enum dir layout, float padding) {
+  struct DOMNode *node = malloc(sizeof(struct DOMNode));
   node->id = id;
-  // node->padding = padding;
-  node->children = NULL;
+  node->padding = padding;
   node->layout = layout;
+  node->children = NULL;
   return node;
 }

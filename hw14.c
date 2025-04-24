@@ -16,21 +16,22 @@ static void render_helper(struct DOMNode *root, float left, float top,
   size_t num_children = length(root->children);
   if (num_children == 0)
     return;
-  float padded_space = 0; //(num_children + 1) * root->padding;
+  float padded_space = (num_children + 1) * root->padding;
   if (root->layout == LAYOUT_HORIZ) {
     float increment = (width - padded_space) / num_children;
-    left += padded_space;
+    left += root->padding;
     for (struct DOMNodeList *cur = root->children; cur != NULL;
          cur = cur->next) {
       render_helper(cur->node, left, top, increment, height);
-      left += increment + padded_space;
+      left += increment + root->padding;
     }
   } else if (root->layout == LAYOUT_VERT) {
     float increment = (height - padded_space) / num_children;
+    top += root->padding;
     for (struct DOMNodeList *cur = root->children; cur != NULL;
          cur = cur->next) {
       render_helper(cur->node, left, top, width, increment);
-      top += increment + padded_space;
+      top += increment + root->padding;
     }
   } else {
     assert(root->layout == LAYOUT_NONE);
