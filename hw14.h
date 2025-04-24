@@ -18,7 +18,7 @@ struct DOMNode {
   struct DOMNodeList *children;
 };
 
-void render(struct DOMNode *root, float window_width, float window_height);
+void layout(struct DOMNode *root, float window_width, float window_height, FILE *target);
 void free_DOMTree(struct DOMNode *root);
 
 

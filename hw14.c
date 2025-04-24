@@ -8,9 +8,9 @@ static size_t length(struct DOMNodeList *list) {
   return 1 + length(list->next);
 }
 
-static void render_helper(struct DOMNode *root, float left, float top,
-                          float width, float height) {
-  printf("%d (%.2f, %.2f) to (%.2f, %.2f)\n", root->id, left, top, left + width,
+static void layout_helper(struct DOMNode *root, float left, float top,
+                          float width, float height, FILE *target) {
+  fprintf(target, "%d %.2f %.2f %.2f %.2f\n", root->id, left, top, left + width,
          top + height);
 
   size_t num_children = length(root->children);
@@ -22,7 +22,7 @@ static void render_helper(struct DOMNode *root, float left, float top,
     left += root->padding;
     for (struct DOMNodeList *cur = root->children; cur != NULL;
          cur = cur->next) {
-      render_helper(cur->node, left, top, increment, height);
+      layout_helper(cur->node, left, top, increment, height, target);
       left += increment + root->padding;
     }
   } else if (root->layout == LAYOUT_VERT) {
@@ -30,20 +30,20 @@ static void render_helper(struct DOMNode *root, float left, float top,
     top += root->padding;
     for (struct DOMNodeList *cur = root->children; cur != NULL;
          cur = cur->next) {
-      render_helper(cur->node, left, top, width, increment);
+      layout_helper(cur->node, left, top, width, increment, target);
       top += increment + root->padding;
     }
   } else {
     assert(root->layout == LAYOUT_NONE);
     for (struct DOMNodeList *cur = root->children; cur != NULL;
          cur = cur->next) {
-      render_helper(cur->node, left, top, width, height);
+      layout_helper(cur->node, left, top, width, height, target);
     }
   }
 }
 
-void render(struct DOMNode *root, float window_width, float window_height) {
-  render_helper(root, 0, 0, window_width, window_height);
+void layout(struct DOMNode *root, float window_width, float window_height, FILE *target) {
+  layout_helper(root, 0, 0, window_width, window_height, target);
 }
 
 static void free_DOMNodeList(struct DOMNodeList *list) {
