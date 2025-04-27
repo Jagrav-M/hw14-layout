@@ -22,6 +22,7 @@ A node in a document tree additionally contains some information about style. In
   - `LAYOUT_HORIZ` if they are stacked horizontally,
   - `LAYOUT_VERT` if they are stacked vertically, or
   - `LAYOUT_NONE` if they are placed directly on top of each other (i.e., occupying the same space)
+> Note that the `layout_direction` of a node with no children can be ignored.
 
 - A `margin`, expressed as a value between $0$ and $1$, representing how much of the parent's width and height should go unused.
 
@@ -39,11 +40,7 @@ The definitions of the node (`struct DOMNode`) and the linked list of nodes (`st
 
 Consider rendering the following document tree in a $160\times 160$ window:
 
-[todo: replace this with an image]
-
-```
-(0 horiz 0.25 (1 vert .1 (2 none 0) (3 none 0)) (4 none 0))
-```
+![insert image](examples/example_dom.svg)
 
 The result is:
 
