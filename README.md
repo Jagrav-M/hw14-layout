@@ -47,12 +47,12 @@ The result is:
 ![insert image](examples/1.bmp)
 
 The red box represents node $0$, and takes up the full $160\times 160$ pixels.
-Since it specifies a $25\%$ margin, the total horizontal margin is $0.25\times 160 = 40$, split into $20$px on the left and $20$px on the right, and similarly $20$px on the top and $20px$ on the bottom.
+Since it specifies a $25$ % margin, the total horizontal margin is $0.25\times 160 = 40$, split into $20$ px on the left and $20$ px on the right, and similarly $20$ px on the top and $20$ px on the bottom.
 
 Its children, nodes $1$ (in green) and $4$ (in purple), are laid out horizontally next to each other.
-Since the remaining width is $160 - 40 = 120$, each child has a width of $60$px and a height of $120$.
+Since the remaining width is $160 - 40 = 120$, each child has a width of $60$ px and a height of $120$.
 
-Node $1$ has a $10\%$ margin, which corresponds to $3$px left/right and $6$px top/bottom, leaving a width of $54$px and a height of $108$px for its children.
+Node $1$ has a $10$ % margin, which corresponds to $3$ px left/right and $6$ px top/bottom, leaving a width of $54$ px and a height of $108$ px for its children.
 
 The children, nodes $2$ (blue) and $3$ (teal), are laid out vertically, so they each have a size of $54\times 54$.
 
