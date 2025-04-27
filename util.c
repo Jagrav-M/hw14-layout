@@ -17,24 +17,16 @@ static void insert_tail(struct DOMNodeList **list_ptr,
   cur->next = new_node;
 }
 
-void add_child(struct DOMNode *parent, struct DOMNode *child) {
+static void add_child(struct DOMNode *parent, struct DOMNode *child) {
   struct DOMNodeList *new_node = malloc(sizeof(struct DOMNodeList));
   new_node->node = child;
   new_node->next = NULL;
   insert_tail(&parent->children, new_node);
 }
 
-struct DOMNode *alloc_node(int id, enum dir layout, float padding) {
-  struct DOMNode *node = malloc(sizeof(struct DOMNode));
-  node->id = id;
-  node->padding = padding;
-  node->layout = layout;
-  node->children = NULL;
-  return node;
-}
-
 static void skip_whitespace(struct stream *s) {
-  while (isspace(s->text[s->pos])) s->pos++;
+  while (isspace(s->text[s->pos]))
+    s->pos++;
 }
 
 static int read_int(struct stream *s) {
@@ -79,13 +71,13 @@ struct DOMNode *load_tree(struct stream *s) {
   skip_whitespace(s);
 
   if (!strncasecmp(s->text + s->pos, "horiz", 5)) {
-    root->layout = LAYOUT_HORIZ;
+    root->layout_direction = LAYOUT_HORIZ;
     s->pos += 5;
   } else if (!strncasecmp(s->text + s->pos, "vert", 4)) {
-    root->layout = LAYOUT_VERT;
+    root->layout_direction = LAYOUT_VERT;
     s->pos += 4;
   } else if (!strncasecmp(s->text + s->pos, "none", 4)) {
-    root->layout = LAYOUT_NONE;
+    root->layout_direction = LAYOUT_NONE;
     s->pos += 4;
   } else {
     fprintf(stderr, "Unrecognized layout for node ID %d\n", root->id);
@@ -93,8 +85,8 @@ struct DOMNode *load_tree(struct stream *s) {
     exit(1);
   }
   skip_whitespace(s);
-  
-  root->padding = read_float(s);
+
+  root->margin = read_float(s);
   skip_whitespace(s);
 
   while (s->text[s->pos] == '(') {
@@ -104,7 +96,8 @@ struct DOMNode *load_tree(struct stream *s) {
   }
 
   if (s->text[s->pos] != ')') {
-    fprintf(stderr, "Missing `)` at position %zu: %s\n", s->pos, s->text + s->pos);
+    fprintf(stderr, "Missing `)` at position %zu: %s\n", s->pos,
+            s->text + s->pos);
     exit(1);
   }
   s->pos++;

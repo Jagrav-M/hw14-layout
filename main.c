@@ -42,7 +42,6 @@ int main(int argc, char **argv) {
     return EXIT_FAILURE;
   }
 
-  fprintf(target, "%.2f %.2f\n", width, height);
   layout(root, width, height, target);
   fclose(target);
 
