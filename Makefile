@@ -10,7 +10,7 @@ render: libbmp render.o libbmp/libbmp.o
 	$(CC) $(CFLAGS) render.o libbmp/libbmp.o -o render
 
 libbmp:
-	git clone git@github.com:marc-q/libbmp.git
+	git clone https://github.com/marc-q/libbmp.git
 
 %.o: %.c
 	$(CC) -c $< -o $@ $(CFLAGS)

@@ -1,5 +1,6 @@
 #include "hw14.h"
 #include <assert.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -31,49 +32,39 @@ static void layout_helper(struct DOMNode *root, float width, float height,
         margin_height = height * root->margin / 2;
   float usable_width = width - 2 * margin_width,
         usable_height = height - 2 * margin_height;
+  float width_per_child = usable_width / num_children,
+        height_per_child = usable_height / num_children;
 
-  if (root->layout_direction == LAYOUT_NONE) {
-    struct DOMNodeList *curr = root->children;
-    for (int i = 0; i < num_children; i++) {
-      assert(curr != NULL);
+  struct DOMNodeList *curr = root->children;
+  for (int i = 0; i < num_children; i++) {
+    assert(curr != NULL);
+
+    switch (root->layout_direction) {
+    case LAYOUT_NONE:
       layout_helper(curr->node, usable_width, usable_height,
                     (Coords){.x = start_c.x + margin_width,
                              .y = start_c.y + margin_height},
                     target);
-      curr = curr->next;
-    }
-
-    return;
-  } else if (root->layout_direction == LAYOUT_HORIZ) {
-    float width_per_child = usable_width / num_children;
-
-    struct DOMNodeList *curr = root->children;
-    for (int i = 0; i < num_children; i++) {
-      assert(curr != NULL);
+      break;
+    case LAYOUT_HORIZ:
       layout_helper(
           curr->node, width_per_child, usable_height,
           (Coords){.x = start_c.x + margin_width + i * width_per_child,
                    .y = start_c.y + margin_height},
           target);
-      curr = curr->next;
-    }
-
-    return;
-  } else if (root->layout_direction == LAYOUT_VERT) {
-    float height_per_child = usable_height / num_children;
-
-    struct DOMNodeList *curr = root->children;
-    for (int i = 0; i < num_children; i++) {
-      assert(curr != NULL);
+      break;
+    case LAYOUT_VERT:
       layout_helper(
           curr->node, usable_width, height_per_child,
           (Coords){.x = start_c.x + margin_width,
                    .y = start_c.y + margin_height + i * height_per_child},
           target);
-      curr = curr->next;
+      break;
+    default:
+      assert(false);
     }
 
-    return;
+    curr = curr->next;
   }
 }
 
