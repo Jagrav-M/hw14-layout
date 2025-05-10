@@ -12,7 +12,9 @@ static int ll_len(struct DOMNodeList *head);
 static void layout_helper(struct DOMNode *root, float width, float height,
                           Coords start_c, FILE *target);
 
-void layout(struct DOMNode *root, float width, float height, FILE *target) {
+void layout(struct DOMNode *root, float width, float height, FILE *target)
+{
+  
   fprintf(target, "%.2f %.2f\n", width, height);
   layout_helper(root, width, height, (Coords){.x = 0, .y = 0}, target);
 }
@@ -68,7 +70,8 @@ static void layout_helper(struct DOMNode *root, float width, float height,
   }
 }
 
-void free_DOMTree(struct DOMNode *root) {
+void free_DOMTree(struct DOMNode *root) 
+{
   if (root == NULL) {
     return;
   }
